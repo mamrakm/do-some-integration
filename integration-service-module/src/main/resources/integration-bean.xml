@@ -12,18 +12,28 @@
             </bean>
         </property>
     </bean>
+<!--    <bean id="json-format" class="org.apache.camel.component.jackson.JacksonDataFormat">-->
+<!--        <property name="unmarshalType" value="cz.mamrakm.integrationservice.dtos.AccountDTO"/>-->
+<!--    </bean>-->
 
     <!-- embed Camel with routes -->
     <camelContext id="camel-crm" xmlns="http://camel.apache.org/schema/spring">
+
+
         <rest id="account-post-request" path="/CRMEvent">
-            <post path="/account">
+            <post path="/account" consumes="application/json">
                 <to uri="direct:postAccount"/>
             </post>
         </rest>
         <route id="account-path-route">
             <from uri="direct:postAccount"/>
-            <log loggingLevel="INFO" message="${id}, ${headers}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}" />
-            <to uri="activemq:topic:cri.integration.mediation"/>
+            <unmarshal  id="unmarshaller-id">
+                <json  unmarshalType="cz.mamrakm.integrationservice.dtos.AccountDTO" library="Jackson"/>
+            </unmarshal>
+            <log loggingLevel="INFO"
+                 message="LOG>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
+            <process ref="getAccountProcessorBean"/>
+            <!--            <to uri="activemq:topic:cri.integration.mediation"/>-->
         </route>
     </camelContext>
 </beans>
