@@ -16,23 +16,9 @@
  */
 package cz.mamrakm.integrationservice;
 
-/**
- * A bean that returns a message when you call the {@link #saySomething()} method.
- */
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class SampleBean {
-
-    private String say;
-
-    public String getSay() {
-        return say;
-    }
-
-    public void setSay(String say) {
-        this.say = say;
-    }
-
-    public String saySomething() {
-        return say;
-    }
 
 }

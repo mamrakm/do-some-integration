@@ -1,29 +1,26 @@
 <!--suppress ALL -->
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:spring="http://camel.apache.org/schema/spring" xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="
           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
           http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-    <!-- define the say bean -->
-    <bean id="integration-service-bean" class="cz.mamrakm.integrationservice.SampleBean">
-        <property name="say" value="${greeting}"/> <!-- use spring property ${ } placeholder syntax -->
+    <bean id="activemq" class="org.apache.camel.component.activemq.ActiveMQComponent">
+        <property name="connectionFactory">
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="tcp://localhost:61616"/>
+            </bean>
+        </property>
     </bean>
 
     <!-- embed Camel with routes -->
-    <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/spring">
-        <route id="hello">
-            <from uri="timer:hello?period={{timer.period}}"/> <!-- use camel {{ }} property placeholder syntax -->
-            <transform>
-                <!-- call the method on the bean -->
-                <method ref="integration-service-bean" method="saySomething"/>
-            </transform>
-            <filter>
-                <simple>${body} contains 'foo'</simple>
-                <to uri="log:foo"/>
-            </filter>
-            <to uri="stream:out"/>
-        </route>
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring" autowiredEnabled="true" >
+        <restConfiguration host="localhost:8080" bindingMode="json" contextPath="/config" />
+        <rest id="rest-crm" path="/CRMEvent/">
+            <get path="/account" consumes="application/json">
+                <to uri="activemq:topic:cra.integration.meditation"/>
+            </get>
+        </rest>
     </camelContext>
 
 </beans>
