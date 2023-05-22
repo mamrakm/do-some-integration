@@ -14,13 +14,16 @@
     </bean>
 
     <!-- embed Camel with routes -->
-    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring" autowiredEnabled="true" >
-        <restConfiguration host="localhost:8080" bindingMode="json" contextPath="/config" />
-        <rest id="rest-crm" path="/CRMEvent/">
-            <get path="/account" consumes="application/json">
-                <to uri="activemq:topic:cra.integration.meditation"/>
-            </get>
+    <camelContext id="camel-crm" xmlns="http://camel.apache.org/schema/spring">
+        <rest id="account-post-request" path="/CRMEvent">
+            <post path="/account">
+                <to uri="direct:postAccount"/>
+            </post>
         </rest>
+        <route id="account-path-route">
+            <from uri="direct:postAccount"/>
+            <log loggingLevel="INFO" message="${id}, ${headers}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}" />
+            <to uri="activemq:topic:cri.integration.mediation"/>
+        </route>
     </camelContext>
-
 </beans>

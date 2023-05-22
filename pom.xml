@@ -12,14 +12,12 @@
     <properties>
         <fasterxml-version>2.14.2</fasterxml-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <camel-version>4.0.0-SNAPSHOT</camel-version>
+        <camel-version>3.20.4</camel-version>
         <skip.starting.camel.context>false</skip.starting.camel.context>
-        <javax.servlet.api.version>4.0.1</javax.servlet.api.version>
     </properties>
 
     <modules>
         <module>integration-service-module</module>
-        <module>bussiness-service-module</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -33,14 +31,9 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>3.1.0</version>
+                <version>2.7.11</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${javax.servlet.api.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -65,7 +58,7 @@
                         <skipStartingCamelContext>${skip.starting.camel.context}</skipStartingCamelContext>
                     </systemPropertyVariables>
                 </configuration>
-                <version>3.0.0-M4</version>
+                <version>2.22.2</version>
             </plugin>
         </plugins>
     </build>
