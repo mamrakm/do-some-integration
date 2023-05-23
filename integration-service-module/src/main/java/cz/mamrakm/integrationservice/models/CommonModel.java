@@ -1,8 +1,11 @@
 package cz.mamrakm.integrationservice.models;
 
-public class CommonModel {
+import java.io.Serializable;
+
+public class CommonModel implements Serializable {
 
   private String operation;
+
   private IntegrationApiModel apiModel;
 
   public CommonModel() {}
@@ -16,7 +19,7 @@ public class CommonModel {
     return apiModel;
   }
 
-  public void setApiModel(IntegrationApiModel apiModel) {
+  public void setApiModel(AccountModel apiModel) {
     this.apiModel = apiModel;
   }
 

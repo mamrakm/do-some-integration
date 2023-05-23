@@ -12,14 +12,11 @@
             </bean>
         </property>
     </bean>
-<!--    <bean id="json-format" class="org.apache.camel.component.jackson.JacksonDataFormat">-->
-<!--        <property name="unmarshalType" value="cz.mamrakm.integrationservice.dtos.AccountDTO"/>-->
-<!--    </bean>-->
+
+    <bean id="account-processor" class="cz.mamrakm.integrationservice.AccountProcessor"/>
 
     <!-- embed Camel with routes -->
     <camelContext id="camel-crm" xmlns="http://camel.apache.org/schema/spring">
-
-
         <rest id="account-post-request" path="/CRMEvent">
             <post path="/account" consumes="application/json">
                 <to uri="direct:postAccount"/>
@@ -27,13 +24,35 @@
         </rest>
         <route id="account-path-route">
             <from uri="direct:postAccount"/>
-            <unmarshal  id="unmarshaller-id">
-                <json  unmarshalType="cz.mamrakm.integrationservice.dtos.AccountDTO" library="Jackson"/>
+            <unmarshal id="unmarshaller-id">
+                <json prettyPrint="true" unmarshalType="cz.mamrakm.integrationservice.models.AccountModel"
+                      library="Jackson"/>
+            </unmarshal>
+            <process ref="account-processor"/>
+            <log loggingLevel="INFO"
+                 message="LOG1>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
+            <marshal>
+                <json prettyPrint="true"   unmarshalType="cz.mamrakm.integrationservice.models.CommonModel"/>
+            </marshal>
+            <log loggingLevel="INFO"
+                 message="LOG2>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
+            <to uri="activemq:queue:cri.integration.mediation"/>
+        </route>
+        <route id="activemq-consumer-route">
+            <from uri="activemq:queue:cri.integration.mediation"/>
+            <log loggingLevel="INFO"
+                 message="LOG3>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
+            <unmarshal>
+                <json prettyPrint="true" library="Jackson"
+                      unmarshalType="cz.mamrakm.integrationservice.models.CommonModel"/>
             </unmarshal>
             <log loggingLevel="INFO"
-                 message="LOG>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
-            <process ref="getAccountProcessorBean"/>
-            <!--            <to uri="activemq:topic:cri.integration.mediation"/>-->
+                 message="LOG4>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
+            <convertBodyTo type="String"/>
+            <to uri="file://custom-object"/>
+            <log loggingLevel="INFO"
+                 message="LOG5>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
+
         </route>
     </camelContext>
 </beans>

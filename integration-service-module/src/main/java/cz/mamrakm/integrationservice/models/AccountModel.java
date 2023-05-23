@@ -1,19 +1,18 @@
-package cz.mamrakm.integrationservice.dtos;
+package cz.mamrakm.integrationservice.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import cz.mamrakm.integrationservice.models.IntegrationApiModel;
 import java.util.Date;
 
-public class AccountDTO extends IntegrationApiModel {
+public class AccountModel extends IntegrationApiModel {
   private Long id;
   private String firstname;
   private String lastname;
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date updatedAt;
 
-  public AccountDTO() {}
+  public AccountModel() {}
 
-  public AccountDTO(Long id, String firstname, String lastname, Date updatedAt) {
+  public AccountModel(Long id, String firstname, String lastname, Date updatedAt) {
     this.id = id;
     this.firstname = firstname;
     this.lastname = lastname;

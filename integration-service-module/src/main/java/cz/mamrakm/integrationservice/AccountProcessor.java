@@ -1,6 +1,6 @@
 package cz.mamrakm.integrationservice;
 
-import cz.mamrakm.integrationservice.dtos.AccountDTO;
+import cz.mamrakm.integrationservice.models.AccountModel;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.mapstruct.factory.Mappers;
@@ -11,8 +11,17 @@ public class AccountProcessor implements Processor {
   @Override
   public void process(Exchange exchange) {
     Logger logger = LoggerFactory.getLogger(AccountProcessor.class);
-    CommonModelMapper commonModelMapper = Mappers.getMapper(CommonModelMapper.class);
-    AccountDTO integrationApiModel = AccountDTO.class.cast(exchange.getMessage().getBody());
-    logger.info(">>> body: {}", integrationApiModel.getFirstname());
+    AccountModel accountModel = exchange.getIn().getBody(AccountModel.class);
+    IntegrationAPIMapper integrationAPIMapper = Mappers.getMapper(IntegrationAPIMapper.class);
+
+    logger.info(
+        ">>> id: {} firstname: {} - lastname: {} - updateDate: {} - message: {}",
+        accountModel.getId(),
+        accountModel.getFirstname(),
+        accountModel.getLastname(),
+        accountModel.getUpdatedAt(),
+        exchange.getMessage());
+
+    exchange.getIn().setBody(integrationAPIMapper.accountToCommon(accountModel));
   }
 }
