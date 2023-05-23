@@ -10,7 +10,14 @@ import org.mapstruct.factory.Mappers;
 public class AccountProcessor implements Processor {
   @Override
   public void process(Exchange exchange) {
+    log.trace("AccountProcessor.process(...)");
+
+    log.trace("Get request body from exchange");
     AccountModel accountModel = exchange.getIn().getBody(AccountModel.class);
+
+    log.trace(
+        "Getting the instance of IntegrationAPIMapper.class using Mapstruct Mappers.getMapper(...)");
+    log.debug("Mapping AccountModel JSON to AccountModel.java POJO");
     IntegrationAPIMapper integrationAPIMapper = Mappers.getMapper(IntegrationAPIMapper.class);
 
     log.info(
@@ -20,7 +27,7 @@ public class AccountProcessor implements Processor {
         accountModel.getLastname(),
         accountModel.getUpdatedAt(),
         exchange.getMessage());
-
+    log.debug("Set response body to POJO returned by mapper");
     exchange.getIn().setBody(integrationAPIMapper.accountToCommon(accountModel));
   }
 }
