@@ -1,16 +1,30 @@
 package cz.mamrakm.integrationservice.models;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
-
-@Data
-@Builder
-@ToString
 public class CommonModel {
 
-    private String operation;
+  private String operation;
+  private IntegrationApiModel apiModel;
 
-    private IntegrationApiModel apiModel;
+  public CommonModel() {}
 
+  public CommonModel(String operation, IntegrationApiModel model) {
+    this.operation = operation;
+    this.apiModel = model;
+  }
+
+  public IntegrationApiModel getApiModel() {
+    return apiModel;
+  }
+
+  public void setApiModel(IntegrationApiModel apiModel) {
+    this.apiModel = apiModel;
+  }
+
+  public String getOperation() {
+    return operation;
+  }
+
+  public void setOperation(String operation) {
+    this.operation = operation;
+  }
 }
