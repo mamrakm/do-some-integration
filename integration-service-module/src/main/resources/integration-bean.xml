@@ -22,6 +22,7 @@
                 <to uri="direct:postAccount"/>
             </post>
         </rest>
+
         <route id="account-path-route">
             <from uri="direct:postAccount"/>
             <unmarshal id="unmarshaller-id">
@@ -38,6 +39,7 @@
                  message="LOG2>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
             <to uri="activemq:queue:cri.integration.mediation"/>
         </route>
+
         <route id="activemq-consumer-route">
             <from uri="activemq:queue:cri.integration.mediation"/>
             <log loggingLevel="INFO"
@@ -52,7 +54,7 @@
             <to uri="file://custom-object"/>
             <log loggingLevel="INFO"
                  message="LOG5>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
-
         </route>
+
     </camelContext>
 </beans>

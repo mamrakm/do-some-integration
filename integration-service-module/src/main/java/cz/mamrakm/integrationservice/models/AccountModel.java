@@ -2,16 +2,14 @@ package cz.mamrakm.integrationservice.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
-@Getter
-@Setter
+@Data
 @ToString
 public class AccountModel extends IntegrationApiModel {
   private Long id;

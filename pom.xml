@@ -6,7 +6,7 @@
     <groupId>cz.mamrakm</groupId>
     <artifactId>camel-integration-parent</artifactId>
     <name>camel-integration-parent</name>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
