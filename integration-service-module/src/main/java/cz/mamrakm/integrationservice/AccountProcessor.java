@@ -1,20 +1,19 @@
 package cz.mamrakm.integrationservice;
 
 import cz.mamrakm.integrationservice.models.AccountModel;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.mapstruct.factory.Mappers;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class AccountProcessor implements Processor {
   @Override
   public void process(Exchange exchange) {
-    Logger logger = LoggerFactory.getLogger(AccountProcessor.class);
     AccountModel accountModel = exchange.getIn().getBody(AccountModel.class);
     IntegrationAPIMapper integrationAPIMapper = Mappers.getMapper(IntegrationAPIMapper.class);
 
-    logger.info(
+    log.info(
         ">>> id: {} firstname: {} - lastname: {} - updateDate: {} - message: {}",
         accountModel.getId(),
         accountModel.getFirstname(),

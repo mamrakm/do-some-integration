@@ -51,7 +51,7 @@
             <log loggingLevel="INFO"
                  message="LOG4>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
             <convertBodyTo type="String"/>
-            <to uri="file://custom-object"/>
+            <to uri="file://activemq-responses"/>
             <log loggingLevel="INFO"
                  message="LOG5>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
         </route>
