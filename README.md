@@ -28,3 +28,5 @@ You should recieve this response after command had finished:
 ```
 CommonModel(operation=PostAccount, apiModel=AccountModel(id=12345, firstname=John, lastname=Doe, updatedAt=Tue Feb 14 11:38:00 CET 2023))
 ```
+
+[![Java CI with Maven](https://github.com/mamrakm/do-some-integration/actions/workflows/maven.yml/badge.svg)](https://github.com/mamrakm/do-some-integration/actions/workflows/maven.yml)
