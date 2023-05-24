@@ -1,4 +1,4 @@
-# Do Some Integration
+# do-some-integration
 
 ## A project for learning basics of Apache Camel with Spring Boot framework and related technologies.
 
@@ -8,15 +8,11 @@ Most straightforward way is simply use Maven and Spring Boot plugin goal
 
 ```./mvnw -U clean install -DskipTests=true && ./mvnw spring-boot:run -pl integration-service-module```
 
-Please note that skipping test is enabled. If you want to run with teste remove the option.
+Please note that test phase is skipped in the command. To run build including unit tests remove the skipTests parameter or change value to false.
 
 ## How to send a request and get a response
 
-In order to test the application you must run the application as described above. **Also you
-have to have __ActiveMQ__ deployed on your localhost system for this app
-to work. Use you system's recommended way to do so.** One way how to send a request on Unix systems (WSL2, cygwin etc.)
-is
-this:
+In order to test the application you must run the application as described above. **Also access to a running __ActiveMQ__ instance is required for this app to work. Use you system's recommended way to do so.** One way how to send a request on Unix systems (WSL2, cygwin etc.) is the following:
 
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"id": 12345,"firstname": "John","lastname": "Doe","updatedAt": "
