@@ -20,6 +20,7 @@
 
     <modules>
         <module>integration-service-module</module>
+        <module>business-service-module</module>
     </modules>
     <dependencyManagement>
         <dependencies>

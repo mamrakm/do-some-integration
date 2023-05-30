@@ -33,7 +33,7 @@
             <log loggingLevel="INFO"
                  message="LOG1>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
             <marshal>
-                <json prettyPrint="true"   unmarshalType="cz.mamrakm.integrationservice.models.CommonModel"/>
+                <json prettyPrint="true" unmarshalType="cz.mamrakm.integrationservice.models.CommonModel"/>
             </marshal>
             <log loggingLevel="INFO"
                  message="LOG2>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
