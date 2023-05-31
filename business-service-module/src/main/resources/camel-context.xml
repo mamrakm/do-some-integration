@@ -25,6 +25,14 @@
         </rest>
         <route>
             <from uri="direct:postBillingAccount"/>
+            <unmarshal>
+                <json prettyPrint="true" library="Jackson"
+                      unmarshalType="cz.mamrakm.integrationservice.models.CommonDTO"/>
+            </unmarshal>
+            <when>
+
+            </when>
+
             <log loggingLevel="INFO"
                  message="LOG4>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
         </route>
