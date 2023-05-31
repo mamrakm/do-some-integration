@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ImportResource;
 public class IntegrationServiceApplication {
 
   public static void main(String[] args) {
+    log.info(">>>IntegrationServiceApplication starting...");
     SpringApplication.run(IntegrationServiceApplication.class, args);
-    log.info(">>>IntegrationServiceApplication started");
   }
 }

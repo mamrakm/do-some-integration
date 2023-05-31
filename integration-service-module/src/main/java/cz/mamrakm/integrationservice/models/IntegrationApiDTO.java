@@ -1,3 +1,3 @@
 package cz.mamrakm.integrationservice.models;
 
-public class IntegrationApiModel {}
+public class IntegrationApiDTO {}

@@ -11,10 +11,11 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @Data
 @ToString
-public class AccountModel extends IntegrationApiModel {
+public class AccountDTO extends IntegrationApiDTO {
   private Long id;
   private String firstname;
   private String lastname;
+
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date updatedAt;
 }
