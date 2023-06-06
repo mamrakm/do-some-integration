@@ -5,16 +5,6 @@
           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
           http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-    <!--    <bean id="activemq" class="org.apache.camel.component.activemq.ActiveMQComponent">-->
-    <!--        <property name="connectionFactory">-->
-    <!--            <bean class="org.apache.activemq.ActiveMQConnectionFactory">-->
-    <!--                <property name="brokerURL" value="tcp://localhost:61616"/>-->
-    <!--            </bean>-->
-    <!--        </property>-->
-    <!--    </bean>-->
-
-    <bean id="account-processor" class="cz.mamrakm.integrationservice.AccountProcessor"/>
-
     <!-- embed Camel with routes -->
     <camelContext id="camel-crm" xmlns="http://camel.apache.org/schema/spring">
         <rest id="billing-account" path="/BillingService">
@@ -27,12 +17,8 @@
             <from uri="direct:postBillingAccount"/>
             <unmarshal>
                 <json prettyPrint="true" library="Jackson"
-                      unmarshalType="cz.mamrakm.integrationservice.models.CommonDTO"/>
+                      unmarshalType="cz.mamrakm.businessservice.models.CommonDTO"/>
             </unmarshal>
-            <when>
-
-            </when>
-
             <log loggingLevel="INFO"
                  message="LOG4>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
         </route>

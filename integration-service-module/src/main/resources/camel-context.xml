@@ -22,7 +22,6 @@
                 <to uri="direct:postAccount"/>
             </post>
         </rest>
-
         <route id="account-path-route">
             <from uri="direct:postAccount"/>
             <unmarshal id="unmarshaller-id">
@@ -50,11 +49,16 @@
             </unmarshal>
             <log loggingLevel="INFO"
                  message="LOG4>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
-            <convertBodyTo type="String"/>
-            <to uri="file://activemq-responses"/>
-            <log loggingLevel="INFO"
-                 message="LOG5>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
+            <when>
+                <jq propertyName=".operation">PostAccount</jq>
+                <to uri="http://localhost:9090/BillingService/BillingAccount"/>
+            </when>
+            <otherwise>
+                <convertBodyTo type="String"/>
+                <to uri="file://activemq-responses"/>
+                <log loggingLevel="INFO"
+                     message="LOG5>>>, ${id}, ${header.CamelHttpMethod}, ${routeId}, ${body}, ${exception}, ${exception.message}"/>
+            </otherwise>
         </route>
-
     </camelContext>
 </beans>
